@@ -1,0 +1,19 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: data-governance-postgres
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_USER: governance
+      POSTGRES_PASSWORD: governance_dev
+      POSTGRES_DB: governance
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
