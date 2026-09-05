@@ -50,5 +50,5 @@ Write-Host "============================================" -ForegroundColor Green
 Write-Host " Airbyte environment check completed." -ForegroundColor Green
 Write-Host "============================================" -ForegroundColor Green
 
-// If Airbyte is not installed, Manually install Airbyte by running `abctl local install`
-// If Airbyte is installed, but not running, start Airbyte by running `abctl local start`
+# If Airbyte is not installed, Manually install Airbyte by running `abctl local install`
+# If Airbyte is installed, but not running, start Airbyte by running `abctl local start`

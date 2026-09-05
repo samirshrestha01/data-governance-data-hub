@@ -1,0 +1,12 @@
+data_governance:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: postgres
+      port: 5432
+      user: governance
+      password: governance_dev
+      dbname: governance
+      schema: analytics
+      threads: 4

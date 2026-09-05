@@ -15,5 +15,21 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  dbt:
+    build:
+      context: ../dbt
+      dockerfile: Dockerfile
+
+    container_name: data-governance-dbt
+    restart: unless-stopped
+
+    working_dir: /usr/app/dbt
+
+    volumes:
+      - ../dbt:/usr/app/dbt
+
+    depends_on:
+      - postgres
+
 volumes:
   postgres_data:
