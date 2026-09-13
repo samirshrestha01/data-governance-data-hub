@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: stg_olist_customers
+    description: "Cleaned customer data from the Airbyte Olist source."
+
+    columns:
+      - name: customer_id
+        description: "Unique identifier for each customer."
+
+        data_tests:
+          - unique
+          - not_null\y

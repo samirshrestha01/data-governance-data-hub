@@ -1,0 +1,26 @@
+version: 2
+
+sources:
+  - name: olist
+    schema: public
+    description: "Raw Olist data ingested by Airbyte."
+
+    tables:
+      - name: olist_customers
+        description: "Customer data ingested from the source PostgreSQL database."
+
+        columns:
+          - name: customer_id
+            description: "Unique identifier for an Olist customer."
+
+          - name: customer_unique_id
+            description: "Unique identifier representing the customer."
+
+          - name: customer_zip_code_prefix
+            description: "Customer ZIP code prefix."
+
+          - name: customer_city
+            description: "Customer city."
+
+          - name: customer_state
+            description: "Customer state."
