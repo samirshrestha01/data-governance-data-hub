@@ -38,3 +38,9 @@ models:
               to: ref('stg_customers')
 
               field: customer_id
+
+      - name: total_order_value
+
+        meta:
+          dimension:
+            type: number
