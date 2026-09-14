@@ -1,0 +1,40 @@
+version: 2
+
+models:
+
+  - name: dim_customers
+
+    description: "One row per unique customer (deduped on customer_unique_id)"
+
+    columns:
+
+      - name: customer_unique_id
+
+        tests: [not_null, unique]
+
+
+  - name: fact_orders
+
+    description: "One row per order, revenue and delivery metrics rolled up from order_items"
+
+    meta:
+      metrics:
+        total_revenue:
+          type: sum
+          sql: ${total_order_value}
+
+    columns:
+
+      - name: order_id
+
+        tests: [not_null, unique]
+
+      - name: customer_id
+
+        tests:
+
+          - relationships:
+
+              to: ref('stg_customers')
+
+              field: customer_id
