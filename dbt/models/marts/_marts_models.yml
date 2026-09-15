@@ -1,3 +1,4 @@
+
 version: 2
 
 models:
@@ -19,9 +20,30 @@ models:
 
     meta:
       metrics:
+
         total_revenue:
           type: sum
           sql: ${total_order_value}
+
+        total_orders:
+          type: count_distinct
+          sql: ${order_id}
+
+        average_order_value:
+          type: average
+          sql: ${total_order_value}
+
+        total_items:
+          type: sum
+          sql: ${item_count}
+
+        total_product_sales:
+          type: sum
+          sql: ${total_price}
+
+        total_freight:
+          type: sum
+          sql: ${total_freight_value}
 
     columns:
 
@@ -35,12 +57,33 @@ models:
 
           - relationships:
 
-              to: ref('stg_customers')
+              arguments:
 
-              field: customer_id
+                to: ref('stg_customers')
+
+                field: customer_id
+
+      - name: item_count
+
+        meta:
+          dimension:
+            type: number
+
+      - name: total_price
+
+        meta:
+          dimension:
+            type: number
+
+      - name: total_freight_value
+
+        meta:
+          dimension:
+            type: number
 
       - name: total_order_value
 
         meta:
           dimension:
             type: number
+
