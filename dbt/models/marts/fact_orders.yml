@@ -1,24 +1,19 @@
-
 version: 2
 
 models:
 
-  - name: dim_customers
-
-    description: "One row per unique customer (deduped on customer_unique_id)"
-
-    columns:
-
-      - name: customer_unique_id
-
-        tests: [not_null, unique]
-
-
   - name: fact_orders
 
-    description: "One row per order, revenue and delivery metrics rolled up from order_items"
+    description: "One row per order, with revenue and delivery metrics."
 
     meta:
+
+      joins:
+        - join: dim_customers
+          sql_on: ${fact_orders.customer_id} = ${dim_customers.customer_id}
+          type: left
+          relationship: many-to-one
+
       metrics:
 
         total_revenue:
@@ -48,42 +43,46 @@ models:
     columns:
 
       - name: order_id
-
-        tests: [not_null, unique]
+        tests:
+          - not_null
+          - unique
 
       - name: customer_id
-
         tests:
-
+          - not_null
           - relationships:
-
               arguments:
-
-                to: ref('stg_customers')
-
+                to: ref('dim_customers')
                 field: customer_id
 
-      - name: item_count
+      - name: order_status
 
+      - name: order_purchase_at
+
+      - name: order_approved_at
+
+      - name: order_delivered_carrier_at
+
+      - name: order_delivered_customer_at
+
+      - name: order_estimated_delivery_at
+
+      - name: item_count
         meta:
           dimension:
             type: number
 
       - name: total_price
-
         meta:
           dimension:
             type: number
 
       - name: total_freight_value
-
         meta:
           dimension:
             type: number
 
       - name: total_order_value
-
         meta:
           dimension:
             type: number
-
