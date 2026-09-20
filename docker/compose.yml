@@ -28,6 +28,9 @@ services:
     volumes:
       - ../dbt:/usr/app/dbt
 
+    environment:
+      DBT_PROFILES_DIR: /usr/app/dbt
+
     depends_on:
       - postgres
 

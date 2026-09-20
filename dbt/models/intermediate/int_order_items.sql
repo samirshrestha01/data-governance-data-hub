@@ -12,6 +12,14 @@ orders as (
 
 ),
 
+products as (
+    select * from {{ref('stg_products') }}
+),
+
+product_categories as (
+    select * from {{ref('stg_product_categories') }}
+),
+
 joined as (
 
     select
@@ -28,13 +36,23 @@ joined as (
         o.order_delivered_customer_at,
         o.order_estimated_delivery_at,
 
+        p.product_category_name,
+        pc.product_category_name_english,
+
         oi.price,
-        oi.freight_value
+        oi.freight_value,
+        oi.price + oi.freight_value as item_revenue
 
     from order_items oi
 
     left join orders o
         on oi.order_id = o.order_id
+
+    left join products p
+        on oi.product_id = p.product_id
+
+    left join product_categories pc
+        on p.product_category_name = pc.product_category_name
 
 )
 

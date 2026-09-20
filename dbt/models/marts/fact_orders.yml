@@ -1,10 +1,11 @@
+
 version: 2
 
 models:
 
   - name: fact_orders
 
-    description: "One row per order, with revenue and delivery metrics."
+    description: "Order-level fact table containing one row per order, with order status, purchase and delivery timestamps, item counts, product sales, freight, and total order value."
 
     meta:
 
@@ -43,11 +44,13 @@ models:
     columns:
 
       - name: order_id
+        description: "Unique identifier for the order. The model grain is one row per order."
         tests:
           - not_null
           - unique
 
       - name: customer_id
+        description: "Identifier linking the order to the corresponding customer record in dim_customers."
         tests:
           - not_null
           - relationships:
@@ -56,33 +59,44 @@ models:
                 field: customer_id
 
       - name: order_status
+        description: "Current status of the order, such as delivered, canceled, or unavailable."
 
       - name: order_purchase_at
+        description: "Timestamp when the customer placed the order."
 
       - name: order_approved_at
+        description: "Timestamp when payment for the order was approved."
 
       - name: order_delivered_carrier_at
+        description: "Timestamp when the order was handed over to the carrier."
 
       - name: order_delivered_customer_at
+        description: "Timestamp when the order was delivered to the customer."
 
       - name: order_estimated_delivery_at
+        description: "Estimated delivery date provided for the order."
 
       - name: item_count
+        description: "Number of items included in the order."
         meta:
           dimension:
             type: number
 
       - name: total_price
+        description: "Total product sales value for all items in the order, excluding freight."
         meta:
           dimension:
             type: number
 
       - name: total_freight_value
+        description: "Total freight value associated with the items in the order."
         meta:
           dimension:
             type: number
 
       - name: total_order_value
+        description: "Total order value calculated as product sales plus freight value."
         meta:
           dimension:
             type: number
+

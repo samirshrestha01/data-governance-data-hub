@@ -1,24 +1,32 @@
+
 version: 2
 
 models:
 
   - name: dim_customers
 
-    description: "One row per customer record"
+    description: "Customer dimension containing one row per customer record, including location information."
 
     columns:
 
       - name: customer_id
+        description: "Unique identifier for the customer record in the source orders system."
         tests:
           - not_null
           - unique
 
       - name: customer_unique_id
+        description: "Identifier representing the unique customer across orders."
+
         tests:
           - not_null
 
       - name: customer_zip_code_prefix
+        description: "Postal code prefix associated with the customer's address."
 
       - name: customer_city
+        description: "City associated with the customer's registered address."
 
       - name: customer_state
+        description: "State associated with the customer's registered address."
+

@@ -1,11 +1,26 @@
+
 version: 2
 
 sources:
+
   - name: raw
     schema: public
+    description: "Raw Olist ecommerce data loaded into PostgreSQL and used as the source layer for dbt transformations."
+
     tables:
+
       - name: olist_customers
+        description: "Raw customer records containing customer identifiers and geographic information."
+
       - name: olist_orders
+        description: "Raw order records containing order status and purchase, approval, delivery, and estimated delivery timestamps."
+
       - name: olist_order_items
+        description: "Raw order item records linking orders to products and containing product price and freight values."
+
       - name: olist_products
+        description: "Raw product records containing product-level attributes."
+
       - name: olist_product_category_translation
+        description: "Raw mapping between product category names and their English translations."
+
