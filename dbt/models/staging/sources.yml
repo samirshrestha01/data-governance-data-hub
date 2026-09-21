@@ -24,3 +24,6 @@ sources:
       - name: olist_product_category_translation
         description: "Raw mapping between product category names and their English translations."
 
+      - name: olist_order_payments
+        description: "Raw order payment records containing payment type and value."
+

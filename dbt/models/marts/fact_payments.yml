@@ -1,0 +1,62 @@
+version: 2
+
+models:
+  - name: fact_payments
+    description: "Payment-level fact table containing one row per payment record for an order."
+
+    meta:
+      metrics:
+
+        payment_count:
+          type: count
+          sql: ${order_id}
+          label: Payment Count
+          description: "Number of payment records."
+
+        total_payment_value:
+          type: sum
+          sql: ${payment_amount}
+          label: Total Payment Value
+          description: "Total value of payments."
+
+        average_payment_value:
+          type: average
+          sql: ${payment_amount}
+          label: Average Payment Value
+          description: "Average value of a payment."
+
+    columns:
+
+      - name: order_id
+        description: "Identifier of the order associated with the payment."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_orders')
+                field: order_id
+
+      - name: payment_record_number
+        description: "Sequence number identifying the payment record within an order."
+        tests:
+          - not_null
+
+      - name: payment_type
+        description: "Method used to make the payment."
+        tests:
+          - not_null
+
+      - name: installment_count
+        description: "Number of installments used for the payment."
+        tests:
+          - not_null
+
+      - name: payment_amount
+        description: "Amount of money represented by the payment."
+        tests:
+          - not_null
+
+      - name: order_purchase_at
+        description: "Timestamp of the order purchase associated with the payment record."
+        tests:
+          - not_null

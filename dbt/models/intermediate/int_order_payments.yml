@@ -1,0 +1,36 @@
+version: 2
+
+models:
+  - name: int_order_payments
+    description: "Payment-level intermediate model containing one row per payment record."
+
+    columns:
+
+      - name: order_id
+        description: "Identifier of the order associated with the payment."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_orders')
+                field: order_id
+
+      - name: payment_record_number
+        description: "Sequence number identifying the payment record within an order."
+        tests:
+          - not_null
+
+      - name: payment_type
+        description: "Method used to make the payment, such as credit card, boleto, or voucher."
+        tests:
+          - not_null
+
+      - name: installment_count
+        description: "Number of installments used for the payment."
+        tests:
+          - not_null
+
+      - name: payment_amount
+        description: "Amount of money represented by the payment."
+        tests:
+          - not_null

@@ -21,7 +21,6 @@ services:
       dockerfile: Dockerfile
 
     container_name: data-governance-dbt
-    restart: unless-stopped
 
     working_dir: /usr/app/dbt
 

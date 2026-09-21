@@ -1,11 +1,10 @@
-
 version: 2
 
 models:
 
   - name: fact_orders
 
-    description: "Order-level fact table containing one row per order, with order status, purchase and delivery timestamps, item counts, product sales, freight, and total order value."
+    description: "Order-level fact table containing one row per order, with order status, purchase and delivery timestamps, item counts, product sales, freight, total order value, and delivery performance metrics."
 
     meta:
 
@@ -40,6 +39,31 @@ models:
         total_freight:
           type: sum
           sql: ${total_freight_value}
+
+        average_delivery_days:
+          type: average
+          sql: ${delivery_days}
+          label: Average Delivery Days
+          description: "Average number of days from order purchase to actual customer delivery."
+
+        average_delivery_delay:
+          type: average
+          sql: ${delivery_delay_days}
+          label: Average Delivery Delay
+          description: "Average difference between actual and estimated delivery time."
+
+        late_orders:
+          type: sum
+          sql: ${is_late}
+          label: Late Orders
+          description: "Number of orders delivered after the estimated delivery date."
+
+        late_delivery_rate:
+          type: number
+          sql: |
+            100.0 * SUM(${is_late}) / NULLIF(COUNT(${order_id}), 0)
+          label: Late Delivery Rate
+          description: "Percentage of orders delivered after the estimated delivery date."
 
     columns:
 
@@ -100,3 +124,20 @@ models:
           dimension:
             type: number
 
+      - name: delivery_days
+        description: "Number of days from order purchase to actual customer delivery."
+        meta:
+          dimension:
+            type: number
+
+      - name: delivery_delay_days
+        description: "Difference in days between actual and estimated customer delivery. Positive values indicate late delivery."
+        meta:
+          dimension:
+            type: number
+
+      - name: is_late
+        description: "Indicates whether the order was delivered after the estimated delivery date. 1 means late and 0 means on time."
+        meta:
+          dimension:
+            type: number

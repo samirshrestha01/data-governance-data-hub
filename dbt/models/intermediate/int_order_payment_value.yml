@@ -1,0 +1,33 @@
+version: 2
+
+models:
+  - name: int_order_payment_value
+    description: "Intermediate model containing one row per order and payment type, used to analyze order value by payment method."
+
+    meta:
+      metrics:
+        average_order_value:
+          type: average
+          sql: ${total_order_value}
+          label: Average Order Value
+          description: "Average order value for orders associated with each payment method."
+
+    columns:
+      - name: order_id
+        description: "Identifier of the order."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('fact_orders')
+                field: order_id
+
+      - name: payment_type
+        description: "Payment method used for the order."
+        tests:
+          - not_null
+
+      - name: total_order_value
+        description: "Total value of the order, including product price and freight."
+        tests:
+          - not_null
