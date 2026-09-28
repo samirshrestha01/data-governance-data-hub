@@ -1,0 +1,21 @@
+services:
+  supplier-minio:
+    image: coollabsio/minio:latest
+    container_name: supplier-minio
+    restart: unless-stopped
+
+    ports:
+      - "9100:9000"
+      - "9101:9001"
+
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ACCESS_KEY}
+      MINIO_ROOT_PASSWORD: ${MINIO_SECRET_KEY}
+
+    command: server /data --console-address ":9001"
+
+    volumes:
+      - supplier_minio_data:/data
+
+volumes:
+  supplier_minio_data:
