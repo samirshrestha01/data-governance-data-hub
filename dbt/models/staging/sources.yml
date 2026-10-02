@@ -4,7 +4,7 @@ version: 2
 sources:
 
   - name: raw
-    schema: public
+    schema: raw_olist_ecom
     description: "Raw Olist ecommerce data loaded into PostgreSQL and used as the source layer for dbt transformations."
 
     tables:
