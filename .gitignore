@@ -21,4 +21,6 @@ logs/
 # OS
 .DS_Store
 Thumbs.db
-airflow/simple_auth_manager_passwords.json
+
+# Airflow
+/airflow/simple_auth_manager_passwords.json
